@@ -13,7 +13,6 @@ using System.Numerics;
 
 namespace GameObjectHelper.ThreadSafeDalamudObjectTable {
     public class ThreadSafeGameObject : IGameObject, ICharacter, IPlayerCharacter {
-        string _json = "";
         private nint _address;
         private SeString _name;
         private Vector3 _position;
@@ -143,7 +142,7 @@ namespace GameObjectHelper.ThreadSafeDalamudObjectTable {
         public RowRef<World> CurrentWorld { get => _framework.IsInFrameworkUpdateThread && _playerCharacter != null ? _playerCharacter.CurrentWorld : _currentWorld; }
         public ThreadSafeGameObjectManager Instance { get => _instance; set => _instance = value; }
 
-        public uint BaseId => _framework.IsInFrameworkUpdateThread && _gameObject != null ? _playerCharacter.BaseId : _baseId;
+        public uint BaseId => _framework.IsInFrameworkUpdateThread && _playerCharacter != null ? _playerCharacter.BaseId : _baseId;
 
         internal void UpdateData(ThreadSafeGameObjectManager parent, IGameObject gameObject, bool isTarget = false) {
             _gameObject = gameObject;
@@ -154,7 +153,7 @@ namespace GameObjectHelper.ThreadSafeDalamudObjectTable {
                     _name = gameObject.Name.TextValue;
                     _position = gameObject.Position;
                     _rotation = gameObject.Rotation;
-                    _dataId = gameObject.DataId;
+                    _dataId = gameObject.BaseId;
                     _entityId = gameObject.EntityId;
                     _gameObjectId = gameObject.GameObjectId;
                     _isDead = gameObject.IsDead;
@@ -224,7 +223,7 @@ namespace GameObjectHelper.ThreadSafeDalamudObjectTable {
         }
 
         public bool Equals(IGameObject? other) {
-            return other.Address == Address;
+            return other?.Address == Address;
         }
     }
 }

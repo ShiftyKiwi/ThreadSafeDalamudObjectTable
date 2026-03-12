@@ -1,4 +1,3 @@
-using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Plugin.Services;
@@ -111,7 +110,7 @@ namespace GameObjectHelper.ThreadSafeDalamudObjectTable
                     }
                     else
                     {
-                        _localPlayer.UpdateData(this, _clientState.LocalPlayer);
+                        _localPlayer.UpdateData(this, _objectTable.LocalPlayer);
                     }
                     if (!_pauseTrackingForNonLocalPlayerObjects)
                     {
