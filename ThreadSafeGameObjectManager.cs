@@ -1,5 +1,6 @@
 using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Objects.Types;
+using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Plugin.Services;
 using System;
 using System.Collections;
@@ -16,7 +17,7 @@ namespace GameObjectHelper.ThreadSafeDalamudObjectTable
         static ConcurrentDictionary<int, ThreadSafeGameObject> _safeGameObjectByIndex = new ConcurrentDictionary<int, ThreadSafeGameObject>();
         static ConcurrentDictionary<uint, ThreadSafeGameObject> _safeGameObjectByEntityId = new ConcurrentDictionary<uint, ThreadSafeGameObject>();
         static ConcurrentDictionary<ulong, ThreadSafeGameObject> _safeGameObjectByGameObjectId = new ConcurrentDictionary<ulong, ThreadSafeGameObject>();
-        public ThreadSafeGameObject LocalPlayer
+        public IPlayerCharacter? LocalPlayer
         {
             get
             {
@@ -58,7 +59,7 @@ namespace GameObjectHelper.ThreadSafeDalamudObjectTable
 
         Stopwatch _rateLimitTimer = new Stopwatch();
         int _updateRate = 80;
-        private ThreadSafeGameObject _localPlayer;
+        private ThreadSafeGameObject? _localPlayer;
         private nint _address;
         private int _length;
         bool _pauseTrackingForNonLocalPlayerObjects;
