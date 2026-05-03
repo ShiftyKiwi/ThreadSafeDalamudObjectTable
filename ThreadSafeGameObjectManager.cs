@@ -80,7 +80,7 @@ namespace GameObjectHelper.ThreadSafeDalamudObjectTable
             _parent = this;
         }
 
-        private void _clientState_TerritoryChanged(ushort obj)
+        private void _clientState_TerritoryChanged(uint obj)
         {
             _safeGameObjectDictionary.Clear();
             _safeGameObjectByIndex.Clear();
