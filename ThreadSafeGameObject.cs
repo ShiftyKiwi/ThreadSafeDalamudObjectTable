@@ -47,6 +47,8 @@ namespace GameObjectHelper.ThreadSafeDalamudObjectTable {
         private ulong _targetObjectId;
         private byte _yalmDistanceX;
         private byte _yalmDistanceZ;
+        private byte _currentDistance;
+        private byte _nextDistance;
         private Vector3 _getMapCoordinates;
         private uint _ownerId;
         private bool _isTargetable;
@@ -101,8 +103,10 @@ namespace GameObjectHelper.ThreadSafeDalamudObjectTable {
         public byte SubKind { get => _framework.IsInFrameworkUpdateThread && _gameObject != null ? _gameObject.SubKind : _subKind; }
         public ThreadSafeGameObject? TargetObject { get => _targetObject; }
         public ulong TargetObjectId { get => _framework.IsFrameworkUnloading && _gameObject != null ? _gameObject.TargetObjectId : _targetObjectId; }
-        public byte YalmDistanceX { get => _framework.IsFrameworkUnloading && _gameObject != null ? _gameObject.YalmDistanceX : _yalmDistanceX; }
-        public byte YalmDistanceZ { get => _framework.IsFrameworkUnloading && _gameObject != null ? _gameObject.YalmDistanceZ : _yalmDistanceZ; }
+        public byte YalmDistanceX { get => CurrentDistance; }
+        public byte YalmDistanceZ { get => NextDistance; }
+        public byte CurrentDistance { get => _framework.IsFrameworkUnloading && _gameObject != null ? _gameObject.CurrentDistance : _currentDistance; }
+        public byte NextDistance { get => _framework.IsFrameworkUnloading && _gameObject != null ? _gameObject.NextDistance : _nextDistance; }
         public Vector3 GetMapCoordinates { get => _framework.IsInFrameworkUpdateThread ? _gameObject.GetMapCoordinates() : _getMapCoordinates; }
         public byte Level { get => _framework.IsInFrameworkUpdateThread && _character != null ? _character.Level : _level; }
         public bool IsTargetable { get => _framework.IsInFrameworkUpdateThread && _gameObject != null ? _gameObject.IsTargetable : _isTargetable; }
@@ -161,8 +165,10 @@ namespace GameObjectHelper.ThreadSafeDalamudObjectTable {
                     _objectIndex = gameObject.ObjectIndex;
                     _subKind = gameObject.SubKind;
                     _targetObjectId = gameObject.TargetObjectId;
-                    _yalmDistanceX = gameObject.YalmDistanceX;
-                    _yalmDistanceZ = gameObject.YalmDistanceZ;
+                    _currentDistance = gameObject.CurrentDistance;
+                    _nextDistance = gameObject.NextDistance;
+                    _yalmDistanceX = _currentDistance;
+                    _yalmDistanceZ = _nextDistance;
                     _getMapCoordinates = gameObject.GetMapCoordinates();
                     _ownerId = gameObject.OwnerId;
                     _objectKind = gameObject.ObjectKind;
